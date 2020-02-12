@@ -40,8 +40,9 @@ class Track {
 }
 
 function bindUserControlls(track) {
-	document.getElementById(track.idOfHtmlControll).addEventListener("click", function (event) {
-		console.log(event.target.className);
+	var controlNode = document.getElementById(track.idOfHtmlControll);
+
+	controlNode.addEventListener("click", function (event) {
 		if (track.isPlaying) {
 			track.stop();
 			document.getElementById(track.idOfHtmlControll).className = "oneTrackControllDisabled";
@@ -51,4 +52,13 @@ function bindUserControlls(track) {
 			document.getElementById(track.idOfHtmlControll).className = "oneTrackControllEnabled";
 		}
 	});
+
+	//Don't play or stop sound when user clicks on volume bar
+	for (var i = 0; i < controlNode.childNodes.length; i++)
+	{
+		var node = controlNode.childNodes[i];
+		if (node.className == "volumeLine" || node.className == "volumeCircle") {
+			node.addEventListener("click", (e) => e.stopPropagation());
+		}
+	}
 }
