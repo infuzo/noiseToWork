@@ -15,11 +15,12 @@ function prepareAudioWithoutGaps(pathToFile) {
 }
 
 class Track {
-	constructor(pathToFile, idOfHtmlControll) {
+	constructor(pathToFile, idOfHtmlControll, defaultVolue = 1.0) {
 		this.audioFile = prepareAudioWithoutGaps(pathToFile);
 		this.idOfHtmlControll = idOfHtmlControll;
 		this.isPlaying = false;
 
+		this.changeVolume(defaultVolue);
 		bindUserControlls(this);
 	}
 
@@ -31,6 +32,10 @@ class Track {
 	stop() {
 		this.audioFile.pause();
 		this.isPlaying = false;
+	}
+
+	changeVolume(newVolume) {
+		this.audioFile.volume = newVolume;
 	}
 }
 
