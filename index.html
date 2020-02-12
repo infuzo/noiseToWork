@@ -32,8 +32,7 @@
 		function prepareAudioWithoutGaps(pathToFile) {
 			var audioFile = new Audio(pathToFile);
 			audioFile.addEventListener('timeupdate', function () {
-				var buffer = maxTimeToResetAudioPlayingTime;
-				if(this.currentTime > this.duration - buffer){
+				if(this.currentTime > this.duration - maxTimeToResetAudioPlayingTime){
 					this.currentTime = 0;
 					this.play();
 				}
@@ -46,20 +45,33 @@
 			constructor(pathToFile, idOfHtmlControll) {
 				this.audioFile = prepareAudioWithoutGaps(pathToFile);
 				this.idOfHtmlControll = idOfHtmlControll;
+				this.isPlaying = false;
 
 				bindUserControlls(this);
+			}
+
+			play() {
+				this.audioFile.play();
+				this.isPlaying = true;
+			}
+
+			stop() {
+				this.audioFile.pause();
+				this.isPlaying = false;
 			}
 		}
 
 		function bindUserControlls(track) {
 			document.getElementById(track.idOfHtmlControll).addEventListener("click", function (event) {
-				playSound(track.audioFile, event.target);
+				if (track.isPlaying) {
+					track.stop();
+					event.target.className = "oneTrackControllDisabled";
+				}
+				else {
+					track.play();
+					event.target.className = "oneTrackControllEnabled";
+				}
 			});
-		}
-
-		function playSound(audioFile, controllHtmlNode) {
-			audioFile.play();
-			controllHtmlNode.className = "oneTrackControllEnabled";
 		}
 
 		const pathToTrain = "sounds/train.mp3";
