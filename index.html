@@ -1,33 +1,72 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
 	<title>Noise to work</title>
+	<style>
+		.trackControlls div {
+			width: 100px; 
+			height: 100px; 
+			display: inline-block;
+		}
+
+		.oneTrackControllDisabled {
+			background-color: blue; 			
+		}
+
+		.oneTrackControllEnabled {
+			background-color: red; 			
+		}
+	</style>
 </head>
 <body>
-	<!--<audio src="sounds/train.mp3" loop="loop" autoplay="autoplay" controls preload="metadata"></audio>-->
 
-	<div>
-		<div id="playRect" style="width: 100px; height: 100px; background-color: blue;">Play</div>
+	<div class="trackControlls">
+		<div id="controllTrain" class="oneTrackControllDisabled">Play Train</div>
+		<div id="controllWater" class="oneTrackControllDisabled">Play Water</div>
 	</div>
 
 	<script>
-		var audio_file = new Audio('sounds/train.mp3');
-		audio_file.addEventListener('timeupdate', function () {
-			console.log("timeupdate");
-						var buffer = .44
-						if(this.currentTime > this.duration - buffer){
-							this.currentTime = 0
-							this.play()
-			}
-		}, false);
-		audio_file.load();
+		const maxTimeToResetAudioPlayingTime = .44;
 
-		document.getElementById("playRect").addEventListener("click", function () {
-			console.log("play");
-			audio_file.play();
-		});
-		
+		function prepareAudioWithoutGaps(pathToFile) {
+			var audioFile = new Audio(pathToFile);
+			audioFile.addEventListener('timeupdate', function () {
+				var buffer = maxTimeToResetAudioPlayingTime;
+				if(this.currentTime > this.duration - buffer){
+					this.currentTime = 0;
+					this.play();
+				}
+			}, false);
+			audioFile.load();
+			return audioFile;
+		}
+
+		class Track {
+			constructor(pathToFile, idOfHtmlControll) {
+				this.audioFile = prepareAudioWithoutGaps(pathToFile);
+				this.idOfHtmlControll = idOfHtmlControll;
+
+				bindUserControlls(this);
+			}
+		}
+
+		function bindUserControlls(track) {
+			document.getElementById(track.idOfHtmlControll).addEventListener("click", function (event) {
+				playSound(track.audioFile, event.target);
+			});
+		}
+
+		function playSound(audioFile, controllHtmlNode) {
+			audioFile.play();
+			controllHtmlNode.className = "oneTrackControllEnabled";
+		}
+
+		const pathToTrain = "sounds/train.mp3";
+		const pathToWater = "sounds/water.mp3";
+
+		new Track(pathToTrain, "controllTrain");
+		new Track(pathToWater, "controllWater");	
 	</script>
 </body>
 </html>
