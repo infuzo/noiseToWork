@@ -41,13 +41,14 @@ class Track {
 
 function bindUserControlls(track) {
 	document.getElementById(track.idOfHtmlControll).addEventListener("click", function (event) {
+		console.log(event.target.className);
 		if (track.isPlaying) {
 			track.stop();
-			event.target.className = "oneTrackControllDisabled";
+			document.getElementById(track.idOfHtmlControll).className = "oneTrackControllDisabled";
 		}
 		else {
 			track.play();
-			event.target.className = "oneTrackControllEnabled";
+			document.getElementById(track.idOfHtmlControll).className = "oneTrackControllEnabled";
 		}
 	});
 }
