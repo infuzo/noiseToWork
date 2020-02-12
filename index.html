@@ -70,9 +70,9 @@
 			border-radius: 3px;
 
 			box-sizing: border-box;
-			position: absolute;
-			left: 30px;
-			top: 125px; 
+			position: relative;
+			left: 10px;
+			top: 15px; 
 		}
 
 		.trackControlls .volumeCircle {
@@ -82,9 +82,9 @@
 			display: block;
 
 			box-sizing: border-box;
-			position: absolute;
-			top: 118px;
-			left: 40px;
+			position: relative;
+			top: -7px;
+			left: 0px;
 
 			background-color: black;
 			border-radius: 10px;
@@ -96,10 +96,12 @@
 	<div class="trackControlls">
 		<div id="controllTrain" class="oneTrackControllDisabled">
 			<i class="fa fa-train"></i>
-			<div class="volumeLine"></div>
-			<div class="volumeCircle"></div>
+			<div class="volumeLine"><div class="volumeCircle"></div></div>
+			
 		</div><div id="controllWater" class="oneTrackControllDisabled">
 			<i class="fa fa-ship"></i>
+			<div class="volumeLine"><div class="volumeCircle"></div></div>
+			
 		</div>
 	</div>
 

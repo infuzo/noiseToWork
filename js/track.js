@@ -1,6 +1,7 @@
 "use strict";
 
 const maxTimeToResetAudioPlayingTime = .44;
+const maxVolumeCircleStyleLeft = 90;
 
 function prepareAudioWithoutGaps(pathToFile) {
 	var audioFile = new Audio(pathToFile);
@@ -15,12 +16,17 @@ function prepareAudioWithoutGaps(pathToFile) {
 }
 
 class Track {
-	constructor(pathToFile, idOfHtmlControll, defaultVolue = 1.0) {
+	constructor(pathToFile, idOfHtmlControll, defaultVolume = 1.0) {
 		this.audioFile = prepareAudioWithoutGaps(pathToFile);
 		this.idOfHtmlControll = idOfHtmlControll;
 		this.isPlaying = false;
 
-		this.changeVolume(defaultVolue);
+		this.changingVolume = false;
+
+		this.startPositionX = 0;
+		this.startCircleLeft = 0;
+
+		this.changeVolume(defaultVolume);
 		bindUserControlls(this);
 	}
 
@@ -37,15 +43,18 @@ class Track {
 	changeVolume(newVolume) {
 		this.audioFile.volume = newVolume;
 	}
+
+
 }
 
+//todo: use consts for classes and ids
 function bindUserControlls(track) {
 	var controlNode = document.getElementById(track.idOfHtmlControll);
 
 	controlNode.addEventListener("click", function (event) {
 		if (track.isPlaying) {
 			track.stop();
-			document.getElementById(track.idOfHtmlControll).className = "oneTrackControllDisabled";
+			document.getElementById(track.idOfHtmlControll).className = "oneTrackControllDisabled"; 
 		}
 		else {
 			track.play();
@@ -53,12 +62,32 @@ function bindUserControlls(track) {
 		}
 	});
 
+	var volumeLineNode = document.querySelector("#" + track.idOfHtmlControll + " ." + "volumeLine");
 	//Don't play or stop sound when user clicks on volume bar
-	for (var i = 0; i < controlNode.childNodes.length; i++)
-	{
-		var node = controlNode.childNodes[i];
-		if (node.className == "volumeLine" || node.className == "volumeCircle") {
-			node.addEventListener("click", (e) => e.stopPropagation());
-		}
+	volumeLineNode.addEventListener("click", (e) => e.stopPropagation());
+
+	var volumeCircleNode = document.querySelector("#" + track.idOfHtmlControll + " ." + "volumeCircle");
+	volumeCircleNode.style.left = Math.round(maxVolumeCircleStyleLeft * track.audioFile.volume) + "px";
+
+	volumeLineNode.addEventListener("mousedown", (e) => {
+		track.changingVolume = true;
+		track.startPositionX = e.clientX;
+		track.startCircleLeft = parseInt(volumeCircleNode.style.left);
+	});
+	volumeLineNode.addEventListener("mouseup", () => { track.changingVolume = false; });
+	volumeLineNode.addEventListener("mouseleave", () => { track.changingVolume = false; });
+
+	volumeLineNode.addEventListener("mousemove", (e) => changingVolumeByControl(e, track));
+}
+
+function changingVolumeByControl(event, track) {
+	if (track.changingVolume) {
+		var circle = document.querySelector("#" + track.idOfHtmlControll + " ." + "volumeCircle"); //todo: cache to track object
+
+		//todo: numbers to consts
+		var newLeft = track.startCircleLeft + (event.clientX - track.startPositionX);
+		if (newLeft < 0) { newLeft = 0; }
+		if (newLeft > 90) { newLeft = 90; }
+		circle.style.left = (newLeft) + "px";
 	}
 }
