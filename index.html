@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Noise to work</title>
+</head>
+<body>
+	<!--<audio src="sounds/train.mp3" loop="loop" autoplay="autoplay" controls preload="metadata"></audio>-->
+
+	<div>
+		<div id="playRect" style="width: 100px; height: 100px; background-color: blue;">Play</div>
+	</div>
+
+	<script>
+		var audio_file = new Audio('sounds/train.mp3');
+		audio_file.addEventListener('timeupdate', function () {
+			console.log("timeupdate");
+						var buffer = .44
+						if(this.currentTime > this.duration - buffer){
+							this.currentTime = 0
+							this.play()
+			}
+		}, false);
+		audio_file.load();
+
+		document.getElementById("playRect").addEventListener("click", function () {
+			console.log("play");
+			audio_file.play();
+		});
+		
+	</script>
+</body>
+</html>
