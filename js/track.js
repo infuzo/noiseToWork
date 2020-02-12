@@ -84,10 +84,12 @@ function changingVolumeByControl(event, track) {
 	if (track.changingVolume) {
 		var circle = document.querySelector("#" + track.idOfHtmlControll + " ." + "volumeCircle"); //todo: cache to track object
 
-		//todo: numbers to consts
 		var newLeft = track.startCircleLeft + (event.clientX - track.startPositionX);
 		if (newLeft < 0) { newLeft = 0; }
-		if (newLeft > 90) { newLeft = 90; }
+		if (newLeft > maxVolumeCircleStyleLeft) { newLeft = maxVolumeCircleStyleLeft; }
 		circle.style.left = (newLeft) + "px";
+
+		var newVolume = newLeft / maxVolumeCircleStyleLeft;
+		track.changeVolume(newVolume);
 	}
 }
