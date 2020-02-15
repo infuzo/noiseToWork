@@ -15,6 +15,8 @@
 		.trackControlls {
 			padding: 0px;
 			margin: 100px auto;
+			min-width: 130px;
+			max-width: 510px;
 			width: 510px;
 		}
 
@@ -115,9 +117,8 @@
 		</div><div id="controllBirds" class="oneTrackControllDisabled">
 			<i class="fa fa-tree"></i>
 			<div class="volumeLine"><div class="volumeCircle"></div></div>
-		</div><br />
-		<div id="controllEngine" class="oneTrackControllDisabled">
-			<i class="fa fa-bus"></i>
+		</div><div id="controllCar" class="oneTrackControllDisabled">
+			<i class="fa fa-car"></i>
 			<div class="volumeLine"><div class="volumeCircle"></div></div>
 		</div><div id="controllWind" class="oneTrackControllDisabled">
 			<i class="fa fa-leaf"></i>
@@ -132,8 +133,8 @@
 		new Track("sounds/train.mp3", "controllTrain", 0.15);
 		new Track("sounds/water.mp3", "controllWater");	
 		new Track("sounds/birds.mp3", "controllBirds", 0.7);	
-		new Track("sounds/engine.mp3", "controllEngine", 0.4);	
-		new Track("sounds/wind.wav", "controllWind", 0.4);	
+		new Track("sounds/car.mp3", "controllCar", 0.8);	
+		new Track("sounds/wind.mp3", "controllWind");	
 		new Track("sounds/rain.mp3", "controllRain", 0.4);	
 	</script>
 </body>
