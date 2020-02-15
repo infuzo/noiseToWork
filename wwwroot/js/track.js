@@ -43,15 +43,15 @@ class Track {
 	changeVolume(newVolume) {
 		this.audioFile.volume = newVolume;
 	}
-
-
 }
 
-//todo: use consts for classes and ids
+//todo: use consts for classes and ids; Separate method
 function bindUserControlls(track) {
 	var controlNode = document.getElementById(track.idOfHtmlControll);
 
 	controlNode.addEventListener("click", function (event) {
+		if (track.changingVolume) { return; } 
+
 		if (track.isPlaying) {
 			track.stop();
 			document.getElementById(track.idOfHtmlControll).className = "oneTrackControllDisabled"; 
@@ -64,32 +64,54 @@ function bindUserControlls(track) {
 
 	var volumeLineNode = document.querySelector("#" + track.idOfHtmlControll + " ." + "volumeLine");
 	//Don't play or stop sound when user clicks on volume bar
-	volumeLineNode.addEventListener("click", (e) => e.stopPropagation());
+	volumeLineNode.addEventListener("click", e => e.stopPropagation());
+
+	volumeLineNode.addEventListener("mousedown", (e) => {
+		changeVolumeAndSetCirclePosition(track, e.clientX - volumeLineNode.getBoundingClientRect().left);
+		e.stopPropagation();
+	});
 
 	var volumeCircleNode = document.querySelector("#" + track.idOfHtmlControll + " ." + "volumeCircle");
 	volumeCircleNode.style.left = Math.round(maxVolumeCircleStyleLeft * track.audioFile.volume) + "px";
 
-	volumeLineNode.addEventListener("mousedown", (e) => {
-		track.changingVolume = true;
-		track.startPositionX = e.clientX;
-		track.startCircleLeft = parseInt(volumeCircleNode.style.left);
-	});
-	volumeLineNode.addEventListener("mouseup", () => { track.changingVolume = false; });
-	volumeLineNode.addEventListener("mouseleave", () => { track.changingVolume = false; });
+	volumeCircleNode.addEventListener("click", (e) => e.stopPropagation());
 
-	volumeLineNode.addEventListener("mousemove", (e) => changingVolumeByControl(e, track));
+	volumeCircleNode.addEventListener("mousedown", (e) => {
+		track.changingVolume = true;
+		track.startPositionX = e.screenX;
+		track.startCircleLeft = parseInt(volumeCircleNode.style.left);
+		e.stopPropagation();
+	});
+	volumeCircleNode.addEventListener("mouseup", (e) => {
+		track.changingVolume = false;
+		e.stopPropagation();
+	});
+
+	controlNode.addEventListener("mouseleave", () => track.changingVolume = false);
+	controlNode.addEventListener("mouseup", () => {
+		setTimeout(() => track.changingVolume = false, 50);	//Timeout needs to prevent playing or pausing sound when user releases mouse button
+	});
+
+	controlNode.addEventListener("mousemove", (e) => {
+		if (track.changeVolume) {
+			changingVolumeByControl(e, track);
+		}
+	});
 }
 
 function changingVolumeByControl(event, track) {
 	if (track.changingVolume) {
-		var circle = document.querySelector("#" + track.idOfHtmlControll + " ." + "volumeCircle"); //todo: cache to track object
-
-		var newLeft = track.startCircleLeft + (event.clientX - track.startPositionX);
-		if (newLeft < 0) { newLeft = 0; }
-		if (newLeft > maxVolumeCircleStyleLeft) { newLeft = maxVolumeCircleStyleLeft; }
-		circle.style.left = (newLeft) + "px";
-
-		var newVolume = newLeft / maxVolumeCircleStyleLeft;
-		track.changeVolume(newVolume);
+		changeVolumeAndSetCirclePosition(track, track.startCircleLeft + (event.screenX - track.startPositionX));
 	}
+}
+
+function changeVolumeAndSetCirclePosition(track, position) {
+	var circle = document.querySelector("#" + track.idOfHtmlControll + " ." + "volumeCircle"); //todo: cache to track object
+
+	if (position < 0) { position = 0; }
+	if (position > maxVolumeCircleStyleLeft) { position = maxVolumeCircleStyleLeft; }
+	circle.style.left = (position) + "px";
+
+	var newVolume = position / maxVolumeCircleStyleLeft;
+	track.changeVolume(newVolume);
 }
