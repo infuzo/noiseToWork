@@ -1,0 +1,16 @@
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\bin\Debug\netcoreapp2.1\NoiseToWorkAsp.deps.json
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\bin\Debug\netcoreapp2.1\NoiseToWorkAsp.runtimeconfig.json
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\bin\Debug\netcoreapp2.1\NoiseToWorkAsp.runtimeconfig.dev.json
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\bin\Debug\netcoreapp2.1\NoiseToWorkAsp.dll
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\bin\Debug\netcoreapp2.1\NoiseToWorkAsp.pdb
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\bin\Debug\netcoreapp2.1\NoiseToWorkAsp.Views.dll
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.csprojAssemblyReference.cache
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.csproj.CoreCompileInputs.cache
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.RazorAssemblyInfo.cache
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.RazorAssemblyInfo.cs
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.AssemblyInfoInputs.cache
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.AssemblyInfo.cs
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.RazorTargetAssemblyInfo.cache
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.dll
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.pdb
+C:\Users\Infuzo\Documents\Projects\NoiseToWork\noiseToWork\obj\Debug\netcoreapp2.1\NoiseToWorkAsp.csproj.CopyComplete
